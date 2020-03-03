@@ -20,7 +20,7 @@ public class Board {
 
     //printBoard will output a board to the console
     public void printBoard() {
-
+        System.out.println("Updated board:");
         for(int row = 0; row < size; row++) {
             for(int col = 0; col < size; col++) {
 
@@ -35,7 +35,23 @@ public class Board {
 
     //makes a move on the board - changes a position to "token value"
     public void makeMove(int row, int col, String token) {
+
         grid[row][col] = token;
     }
+
+
+    //win check routine with basic "algorithm" for now
+    //any move at 0,0 ends game
+    public boolean checkWin() {
+
+        if(grid[0][0] != "0") {
+            return true;
+        }
+
+        return false;
+
+    }
+
+
 
 }

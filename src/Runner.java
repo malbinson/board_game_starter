@@ -9,9 +9,10 @@ public class Runner {
         Human h = new Human("Alby", "X");
         Computer c = new Computer("Z");
         Scanner sc =  new Scanner(System.in);
+        Board b = new Board();
 
         //game loop - alternate moves
-        while(!h.checkWin() && !c.checkWin()) {
+        while(!b.checkWin()) {
 
             //set up vars
             boolean legalRow = false;
@@ -47,17 +48,16 @@ public class Runner {
                 }
 
                 if(legalRow && legalCol) {
-                    h.b.makeMove(moveRow,moveCol,h.token);
+                    b.makeMove(moveRow,moveCol,h.token);
                 }
             }
 
             //computer move
             int[] cMove = c.determineMove();
-            c.b.makeMove(cMove[0],cMove[1],c.token);
+            b.makeMove(cMove[0],cMove[1],c.token);
 
             //all done moving, display and repeat
-            h.display();
-            c.display();
+            b.printBoard();
 
         }
 
