@@ -62,6 +62,7 @@ public class Runner {
             //all done moving, display and repeat
             b.printBoard();
 
+
         }
 
         System.out.print("Game Over!");
