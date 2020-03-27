@@ -7,15 +7,11 @@ public class Board {
     //constructor initializes the whole
     // grid with 0's when created
     public Board() {
-
         for(int row = 0; row < size; row++) {
             for(int col = 0; col < size; col++) {
-
-                grid[row][col] = "0";
-
+                grid[row][col] = "-";
             }
         }
-
     }
 
     //************ ALGORITHM #1 ***************
@@ -30,32 +26,71 @@ public class Board {
             }
             System.out.print("\n");  // "\n" is the character for "new line"
         }
-
-
     }
 
     //************ ALGORITHM #2 ***************
     //makes a move on the board - changes a position to "token value"
-    public void makeMove(int row, int col, String token) {
+    public void makeMove(int col, String token) {
 
-        grid[row][col] = token;  // for Connect-4 you will need to determine the row value
-                                 // based on the existing values in the grid (where does the token "drop" to)
+        for(int i = size-1; i >= 0; i--) {
+            if(grid[i][col].equals("-")){
+                grid[i][col] = token;
+                break;
+            }
+        }
+
     }
+
+
+
+    public boolean colHasRoom(int col) {
+        if(grid[0][col].equals("-")) {
+            return true;
+        }
+        return false;
+    }
+
 
 
     //************ ALGORITHM #3 ***************
     // return true if there are 4 in a row anywhere on the board
     // for now, any move at 0,0 ends game
-    public boolean checkWin() {
+    public boolean checkWin(String token) {
 
-        if(grid[0][0] != "0") {
-            return true;
+        boolean v = checkWinVertical(token);
+        boolean h = checkWinHorizontal(token);
+        boolean d = checkWinDiagonal(token);
+
+        return v || h || d;
+    }
+
+    public boolean checkWinVertical(String token) {
+
+        for(int col = 0; col < 8; col++) {
+            for(int row = 0; row < 5; row++){
+
+                if(grid[row][col].equals(token) &&
+                    grid[row+1][col].equals(token) &&
+                    grid[row+2][col].equals(token) &&
+                    grid[row+3][col].equals(token)) {
+
+                    return true;
+
+                }
+
+            }
         }
 
         return false;
 
     }
 
+    public boolean checkWinHorizontal(String token) {
+        return false;
+    }
 
+    public boolean checkWinDiagonal(String token) {
+        return false;
+    }
 
 }

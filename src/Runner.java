@@ -7,54 +7,57 @@ public class Runner {
 
         //make instances
         Human h = new Human("Alby", "X");
-        Computer c = new Computer("Z");
+        Computer c = new Computer("O");
         Scanner sc =  new Scanner(System.in);
         Board b = new Board();
+        String currentToken = h.token;
 
         //game loop - alternate moves
-        while(!b.checkWin()) {
+        while(!b.checkWin(currentToken)) {
 
             //set up vars
-            boolean legalRow = false;
             boolean legalCol = false;
-            int moveRow = -1;
             int moveCol = -1;
 
             //human move: validate input and move
-            while(!legalRow || !legalCol) {
-
-                //row move
-                System.out.println("Enter row to move:");
-                //hasNextInt will return true if user input is an int
-                if(sc.hasNextInt()) {
-                    moveRow = sc.nextInt();
-                    legalRow = true;
-                }
-                else {
-                    System.out.println("Enter a legal row!");
-                    sc.next();  //very important, resets the input from the "bad" one
-                }
+            while(!legalCol) {
 
                 //col move
                 System.out.println("Enter col to move:");
                 //hasNextInt will return true if user input is an int
                 if(sc.hasNextInt()) {
-                    moveCol = sc.nextInt();
+                    moveCol = sc.nextInt()-1;
                     legalCol = true;
+
+                    if(moveCol > 8) {
+                        System.out.println("Enter a legal col!");
+                        legalCol = false;
+                        sc.next();
+                    }
+
+                    if(moveCol < 8 && !b.colHasRoom(moveCol)){
+                        System.out.println("Colun is Full");
+                        legalCol = false;
+                        sc.next();
+                    }
                 }
                 else {
                     System.out.println("Enter a legal col!");
                     sc.next();  //very important, resets the input from the "bad" one
                 }
 
-                if(legalRow && legalCol) {
-                    b.makeMove(moveRow,moveCol,h.token);
+
+
+                if(legalCol && b.colHasRoom(moveCol)) {
+                    b.makeMove(moveCol,h.token);
+                    currentToken = h.token;
                 }
             }
 
             //computer move
-            int[] cMove = c.determineMove();
-            b.makeMove(cMove[0],cMove[1],c.token);
+            int cMove = c.determineMove();
+            b.makeMove(cMove,c.token);
+            currentToken = c.token;
 
             //all done moving, display and repeat
             b.printBoard();
