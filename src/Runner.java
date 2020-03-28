@@ -10,20 +10,19 @@ public class Runner {
         Computer c = new Computer("O");
         Scanner sc =  new Scanner(System.in);
         Board b = new Board();
-        String currentToken = h.token;
 
-        //game loop - alternate moves
-        while(!b.checkWin(currentToken)) {
+        //game loop
+        while(!b.checkWin(c.token)) {  //check for computer win
 
             //set up vars
             boolean legalCol = false;
             int moveCol = -1;
 
-            //human move: validate input and move
+            //human turn loop
             while(!legalCol) {
 
-                //col move
                 System.out.println("Enter col to move:");
+
                 //hasNextInt will return true if user input is an int
                 if(sc.hasNextInt()) {
                     moveCol = sc.nextInt()-1;
@@ -36,7 +35,7 @@ public class Runner {
                     }
 
                     if(moveCol < 8 && !b.colHasRoom(moveCol)){
-                        System.out.println("Colun is Full");
+                        System.out.println("Column is Full");
                         legalCol = false;
                         sc.next();
                     }
@@ -50,20 +49,23 @@ public class Runner {
 
                 if(legalCol && b.colHasRoom(moveCol)) {
                     b.makeMove(moveCol,h.token);
-                    currentToken = h.token;
                 }
+            } //end of inner loop
+
+            //check for human win
+            if(b.checkWin(h.token)) {
+                break;
             }
 
             //computer move
             int cMove = c.determineMove();
             b.makeMove(cMove,c.token);
-            currentToken = c.token;
 
             //all done moving, display and repeat
             b.printBoard();
 
 
-        }
+        }  //end turn while loop
 
         System.out.print("Game Over!");
 
