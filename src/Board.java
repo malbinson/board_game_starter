@@ -66,8 +66,8 @@ public class Board {
 
     public boolean checkWinVertical(String token) {
 
-        for(int col = 0; col < 8; col++) {
-            for(int row = 0; row < 5; row++){
+        for(int row = 0; row < 8; row++){
+          for(int col = 0; col < 5; col++) {
 
                 if(grid[row][col].equals(token) &&
                     grid[row+1][col].equals(token) &&
