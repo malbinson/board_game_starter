@@ -64,25 +64,18 @@ public class Board {
         return v || h || d;
     }
 
-    public boolean checkWinVertical(String token) {
-
-        for(int row = 0; row < 5; row++){
-          for(int col = 0; col < 8; col++) {
-
+     public boolean checkWinVertical(String token) {
+        for(int col = 0; col < 8; col++) {
+            for(int row = 0; row < 5; row++){
                 if(grid[row][col].equals(token) &&
-                    grid[row+1][col].equals(token) &&
-                    grid[row+2][col].equals(token) &&
-                    grid[row+3][col].equals(token)) {
-
+                        grid[row+1][col].equals(token) &&
+                        grid[row+2][col].equals(token) &&
+                        grid[row+3][col].equals(token)) {
                     return true;
-
                 }
-
             }
         }
-
         return false;
-
     }
 
     public boolean checkWinHorizontal(String token) {
